@@ -72,9 +72,10 @@ if claude mcp list 2>/dev/null | grep -qE "^\s*${MCP_NAME}\b"; then
     claude mcp remove "${MCP_NAME}" >/dev/null
 fi
 
-# --- 5. Register the MCP ---------------------------------------------------
-info "Registering the MCP with Claude Code"
+# --- 5. Register the MCP (user scope = available across all projects) -----
+info "Registering the MCP with Claude Code (user scope)"
 claude mcp add "${MCP_NAME}" \
+    -s user \
     -e "GENDERIZE_API_KEY=${KEY}" \
     -- uvx --from "${GIT_URL}" mcp-gender-detector
 
