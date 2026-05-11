@@ -5,22 +5,25 @@ build-backend = "hatchling.build"
 [project]
 name = "mcp-gender-detector"
 version = "0.1.0"
-description = "MCP server that detects gender (Mr/Ms) from a person's first name"
+description = "MCP server that detects gender (Mr/Ms) from a person's first name — offline-first with Genderize.io fallback"
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
 authors = [
     { name = "Hubert" }
 ]
-keywords = ["mcp", "gender", "detection", "name"]
+keywords = ["mcp", "model-context-protocol", "gender", "detection", "name", "title", "salutation"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 dependencies = [
     "mcp[cli]>=1.0.0",
@@ -28,5 +31,14 @@ dependencies = [
     "httpx>=0.27.0",
 ]
 
+[project.urls]
+Homepage = "https://github.com/hwinssinger/mcp-gender-detector"
+Repository = "https://github.com/hwinssinger/mcp-gender-detector"
+Issues = "https://github.com/hwinssinger/mcp-gender-detector/issues"
+Changelog = "https://github.com/hwinssinger/mcp-gender-detector/releases"
+
 [project.scripts]
 mcp-gender-detector = "mcp_gender_detector.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/mcp_gender_detector"]
