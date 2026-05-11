@@ -13,9 +13,33 @@ err()  { printf "ERROR: %s\n" "$*" >&2; exit 1; }
 info() { printf "==> %s\n" "$*"; }
 
 # --- 1. Prerequisites ------------------------------------------------------
-command -v claude >/dev/null 2>&1 || err "Claude Code CLI not found. Install it first: https://docs.claude.com/en/docs/agents-and-tools/claude-code/overview"
-command -v uv     >/dev/null 2>&1 || err "uv not found. Install it first: https://docs.astral.sh/uv/getting-started/installation/"
-command -v curl   >/dev/null 2>&1 || err "curl required."
+if ! command -v claude >/dev/null 2>&1; then
+    cat >&2 <<'EOF'
+ERROR: Claude Code CLI not found.
+
+Install with one of:
+  npm install -g @anthropic-ai/claude-code
+  brew install --cask claude-code
+Docs: https://docs.claude.com/en/docs/agents-and-tools/claude-code/overview
+
+EOF
+    exit 1
+fi
+
+if ! command -v uv >/dev/null 2>&1; then
+    cat >&2 <<'EOF'
+ERROR: uv not found.
+
+Install with one of:
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  brew install uv
+Docs: https://docs.astral.sh/uv/getting-started/installation/
+
+EOF
+    exit 1
+fi
+
+command -v curl >/dev/null 2>&1 || err "curl required (ships with macOS by default — check your PATH)."
 
 info "Setting up the '${MCP_NAME}' MCP server"
 cat <<'EOF'
